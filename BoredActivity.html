@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+    <script src="../Scripts/bootstrap.js"></script>
+    <script src="../Scripts/respond.js"></script>
+    <link href="../Content/bootstrap.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+    <body ng-app ="apiApp">
+        
+        <div class="container" ng-controller="boredController" ng-init="Init()">
+            <br/>
+            <input type="button" value="Another Task" ng-click="Init()"/>
+            <h2>Fun With API</h2>
+            <div>
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td>Activity</td>
+                        <td>Accessibility</td>
+                        <td>Type</td>
+                        <td>Participants</td>
+                        <td>Price</td>
+                        <td>Link</td>
+                        <td>Key</td>
+                    </tr>
+                    <tr>
+                        <td>{{Activity.activity}}</td>
+                        <td>{{Activity.accessibility}}</td>
+                        <td>{{Activity.type}}</td>
+                        <td>{{Activity.price}}</td>
+                        <td>{{Activity.accessibility}}</td>
+                        <td>{{Activity.link}}</td>
+                        <td>{{Activity.key}}</td>
+                    </tr>
+                </table>
+            </div>
+            
+        </div>
+    
+        <script>
+            var app = angular.module('apiApp', []);
+
+            app.controller('boredController', function ($scope, $http) {
+
+                $scope.Init = function() {
+                    $scope.LoadActivity();
+                };
+
+                $scope.LoadActivity = function () {
+                    $http({
+                        method: "GET",
+                        url: "http://www.boredapi.com/api/activity"
+                    }).then(
+
+                        function mySuccess(response) {
+                            $scope.Activity = response.data;
+                        },
+
+                        function myError(response) {
+                            $scope.myWelcome = response.statusText;
+                     });
+                };
+            });
+        </script>
+    </body>
+</html>
